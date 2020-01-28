@@ -53,13 +53,13 @@ namespace FakeEndoscopicCapture
             }          
         }
 
-        private void Capture()
+        private void Capture(int cameraNumber, int frameWidth, int frameHeight, int fps)
         {
-            var camera = new VideoCapture(Properties.Settings.Default.cameraNumber)
+            var camera = new VideoCapture(cameraNumber)
             {
-                FrameWidth = Properties.Settings.Default.captureWidth,
-                FrameHeight = Properties.Settings.Default.captureHeight,
-                Fps = Properties.Settings.Default.captureFps
+                FrameWidth = frameWidth,
+                FrameHeight = frameHeight,
+                Fps = fps
             };
 
             using (var img = new Mat())
@@ -131,7 +131,21 @@ namespace FakeEndoscopicCapture
             this.Grid_Image.RowDefinitions[0].Height = new GridLength(topMargin);
             this.Grid_Image.RowDefinitions[2].Height = new GridLength(bottomMargin);
 
-            await Task.Run(this.Capture);
+            int cameraNumber = Properties.Settings.Default.cameraNumber;
+            int frameWidth = Properties.Settings.Default.captureWidth;
+            int frameHeight = Properties.Settings.Default.captureHeight;
+            int fps = Properties.Settings.Default.captureFps;
+
+            this.TextBlock_memo.Text = string.Format(
+                "num={0}, width={1}, height={2}, fps={3}, actualW={4}, actualH={5}",
+                cameraNumber,
+                frameWidth, 
+                frameHeight,
+                fps,
+                (int)gridWidth,
+                (int)gridHeight);
+
+            await Task.Run(() => this.Capture(cameraNumber, frameWidth, frameHeight, fps));
 
             this.Image_Main.Source = null;
             this.Close();

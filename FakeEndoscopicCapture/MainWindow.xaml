@@ -62,6 +62,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Button x:Name="Button_Start" Content="Capture Start" Width="100"  Margin="10 2 10 2"  Style="{StaticResource MyButton1}" Click="Button_Start_Click"/>
             <Button x:Name="Button_Close" Content="Close" Width="100"  Margin="10 2 10 2"  Style="{StaticResource MyButton1}" Click="Button_Close_Click"/>
+            <TextBlock x:Name="TextBlock_memo" Foreground="Gray" Margin="0 20 0 0">*******</TextBlock>
         </StackPanel>
     </Grid>
 </Window>
